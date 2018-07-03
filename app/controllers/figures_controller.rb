@@ -7,18 +7,19 @@ class FiguresController < ApplicationController
       erb :'/figures/index'
     end
 
-
-    get '/figures/new' do
-
-      erb :'/figures/new'
-    end
-
     post '/figures' do
         @figure = Figure.create(params[:figure])
-        @figure.titles  << Title.find_or_create_by(params[:title]) if !params[:title][:name].empty?
+        params[:title].each do |title|
+          @figure.titles << Title.find_or_create_by(params[:title])
+        end
         @figure.landmarks << Landmark.find_or_create_by(params[:landmark]) if !params[:landmark][:name].empty? || params[:landmark][:year_completed].empty?
         @figure.save
       redirect to "/figures/#{@figure.id}"
+    end
+    
+    get '/figures/new' do
+
+      erb :'/figures/new'
     end
 
     get '/figures/:id' do
