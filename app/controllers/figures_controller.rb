@@ -7,16 +7,32 @@ class FiguresController < ApplicationController
       erb :'/figures/index'
     end
 
-    # Read get: New figure page
+
     get '/figures/new' do
-      @titles = Title.all.sort_by do |title|
-        title.name
-      end
-      @landmarks = Landmark.all.sort_by do |landmark|
-        landmark.name
-      end
 
       erb :'/figures/new'
     end
 
+    post '/figures' do
+        @figure = Figure.create(params[:figure])
+        @figure.titles  << Title.create(params[:title]) if !params[:title][:name].empty?
+        @figure.landmarks << Landmark.create(params[:landmark]) if !params[:landmark][:name].empty? && params[:landmark][:year_completed].empty?
+        @figure.save
+      redirect to "/figures/#{@figure.id}"
+    end
+
+    get '/figures/:id' do
+      @figure = Figure.find(params[:id])
+      erb :'/figure/show'
+    end
+
+    get '/figures/:id/edit' do
+      @figure = Figure.find(params[:id])
+      erb :'/figures/edit'
+    end
+
+    patch '/figures' do
+      
+      redirect to "/figures/#{@figure.id}"
+    end
   end
