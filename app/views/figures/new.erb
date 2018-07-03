@@ -12,11 +12,13 @@
     <input type="text" name="title_name" value="">
     <br><br>
     <b>Landmarks</b>
+    <br><br>
     <% @landmarks.each do |landmark| %>
     <%=landmark.name%><input type="checkbox" name="landmarks[]" value="<%=landmark.name%>" id="<%=landmark.name%>"><br>
     <% end %>
     <br><br>
     <b>Create New Landmark:</b>
+    <br><br>
     Name:<input type="text" name="landmark_name" >
     Year:<input type="text" name="year_completed" >
     <input type="submit" name="" value="Create New Figure">
