@@ -19,13 +19,16 @@ class TitlesController < ApplicationController
   end
 
   post '/titles' do
-
+      @title = Title.create(params[:title])
+      @title.figures <<  Figure.find_or_create_by(params[:figure]) if !params[:figure][:name].empty?
      redirect to "/titles/#{@title.id}"
    end
 
    patch '/titles' do
-
+     @title = Title.find(params[:id])
+     @title.update(params[:title])
+     @title.figures <<  Figure.find_or_create_by(params[:figure]) if !params[:figure][:name].empty?
      redirect to "/titles/#{title.id}"
    end
-   
+
 end
