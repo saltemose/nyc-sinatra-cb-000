@@ -27,7 +27,7 @@ class FiguresController < ApplicationController
 
     get '/figures/:id/edit' do
       @figure = Figure.find(params[:id])
-      puts :'/figures/edit'
+      puts erb :'/figures/edit'
       erb :'/figures/edit'
     end
 
