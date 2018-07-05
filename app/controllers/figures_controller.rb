@@ -9,14 +9,12 @@ class FiguresController < ApplicationController
 
     post '/figures' do
         @figure = Figure.create(params[:figure])
-        params[:title].each do |title|
-          @figure.titles << Title.find_or_create_by(params[:title])
-        end
+        @figure.titles << Title.find_or_create_by(params[:title]) if !params[:title][:name].empty?
         @figure.landmarks << Landmark.find_or_create_by(params[:landmark]) if !params[:landmark][:name].empty? || params[:landmark][:year_completed].empty?
         @figure.save
       redirect to "/figures/#{@figure.id}"
     end
-    
+
     get '/figures/new' do
 
       erb :'/figures/new'
@@ -24,7 +22,7 @@ class FiguresController < ApplicationController
 
     get '/figures/:id' do
       @figure = Figure.find(params[:id])
-      erb :'/figure/show'
+      erb :'/figures/show'
     end
 
     get '/figures/:id/edit' do
