@@ -27,8 +27,6 @@ class FiguresController < ApplicationController
 
     get '/figures/:id/edit' do
       @figure = Figure.find(params[:id])
-      puts @figure.to_json
-      puts "AAAAAAAAAAAAAAAAAAAA"
       erb :'/figures/edit'
     end
 
